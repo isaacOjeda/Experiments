@@ -1,19 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Auth0Test01.Web.Pages;
+
 
 public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
+    private readonly HttpClient _http;
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public IndexModel(ILogger<IndexModel> logger, IHttpClientFactory httpClientFactory)
     {
         _logger = logger;
+        _http = httpClientFactory.CreateClient("Api");
     }
 
-    public void OnGet()
-    {
 
+    public string RawApiResponse { get; set; }
+
+
+    public async Task OnGet()
+    {
+        var result = await _http.GetAsync("/me");
+
+        result.EnsureSuccessStatusCode();
+
+
+        RawApiResponse = await result.Content.ReadAsStringAsync();
     }
 }

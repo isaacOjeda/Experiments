@@ -18,4 +18,9 @@
         <li>id_token: @(await HttpContext.GetTokenAsync("id_token"))</li>
         <li>refresh_token: @(await HttpContext.GetTokenAsync("refresh_token"))</li>
     </ul>
+
+
+    <h2>Raw Response from API</h2>
+
+    @Model.RawApiResponse
 }
