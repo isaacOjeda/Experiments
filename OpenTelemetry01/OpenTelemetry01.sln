@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetry01", "OpenTelemetry01.csproj", "{EB947BFB-169C-4C38-8C67-50C29310B171}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6D19BA9B-D04D-4897-BD09-99F95A1A774D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB947BFB-169C-4C38-8C67-50C29310B171}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB947BFB-169C-4C38-8C67-50C29310B171}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB947BFB-169C-4C38-8C67-50C29310B171}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB947BFB-169C-4C38-8C67-50C29310B171}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8B1BE2B5-842F-4DAE-9B98-5A86B751EAD6}
+	EndGlobalSection
+EndGlobal
