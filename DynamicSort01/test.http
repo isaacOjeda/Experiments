@@ -1,0 +1,2 @@
+GET http://localhost:5000/api/customers?sort_dir=asc&sort_field=age
+Content-Type: application/json
