@@ -8,35 +8,21 @@ public static class EntityFrameworkExtensions
 {
     public static IQueryable<TEntity> OrderBy<TEntity>(this IQueryable<TEntity> source, string orderByStrValues) where TEntity : class
     {
-        var queryExpr = source.Expression;
-        var methodAsc = "OrderBy";
-        var methodDesc = "OrderByDescending";
+        var queryExpr = source.Expression;        
+        var command = orderByStrValues.ToUpper().EndsWith("DESC") ? "OrderByDescending" : "OrderBy";
+        var propertyName = orderByStrValues.Split(' ')[0].Trim();
 
-        var orderByValues = orderByStrValues.Trim().Split(',').Select(x => x.Trim()).ToList();
+        var type = typeof(TEntity);
+        var property = SearchProperty(type, propertyName);
 
-        foreach (var orderPairCommand in orderByValues)
-        {
-            var command = orderPairCommand.ToUpper().EndsWith("DESC") ? methodDesc : methodAsc;
+        if (property == null)
+            return source; // ignoramos el sort
 
-            //Get propertyname and remove optional ASC or DESC
-            var propertyName = orderPairCommand.Split(' ')[0].Trim();
+        var parameter = Expression.Parameter(type, "p");
+        var propertyAccess = Expression.MakeMemberAccess(parameter, property);
+        var orderByExpression = Expression.Lambda(propertyAccess, parameter);
 
-            var type = typeof(TEntity);
-            var parameter = Expression.Parameter(type, "p");
-
-            PropertyInfo? property = SearchProperty(type, propertyName);
-
-            if (property == null)
-                continue;
-
-            MemberExpression propertyAccess = Expression.MakeMemberAccess(parameter, property);
-            var orderByExpression = Expression.Lambda(propertyAccess, parameter);
-
-            queryExpr = Expression.Call(typeof(Queryable), command, new Type[] { type, property.PropertyType }, queryExpr, Expression.Quote(orderByExpression));
-
-            methodAsc = "ThenBy";
-            methodDesc = "ThenByDescending";
-        }
+        queryExpr = Expression.Call(typeof(Queryable), command, new Type[] { type, property.PropertyType }, queryExpr, Expression.Quote(orderByExpression));
 
         return source.Provider.CreateQuery<TEntity>(queryExpr); ;
     }
