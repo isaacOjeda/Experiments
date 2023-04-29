@@ -8,7 +8,7 @@
 @if(User.Identity!.IsAuthenticated)
 {
     <h2>Welcome @User.Identity.Name</h2>
-
+    <img class="img-thumbnail" src="@(User.FindFirst("picture")?.Value)" />
     <ul>
         @foreach(var claim in @User.Claims)
         {
