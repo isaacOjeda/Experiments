@@ -39,8 +39,12 @@ services:
     environment:
       - COLLECTOR_ZIPKIN_HOST_PORT=:9411
       - COLLECTOR_OTLP_ENABLED=true
+    volumes:
+      - ./tmp/jaeger:/tmp/jaeger
+      - ./tmp/jaeger:/tmp
     networks:
       - opentelemetry
+
   prometheus:
     image: prom/prometheus
     ports:
@@ -49,6 +53,8 @@ services:
       - source: prometheus_config
         target: /etc/prometheus/prometheus.yml
     container_name: prometheus
+    volumes:
+      - ./tmp/prometheus:/prometheus    
     networks:
       - opentelemetry
   grafana:
@@ -59,6 +65,8 @@ services:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_AUTH_DISABLE_LOGIN_FORM=true
+    volumes:
+      - ./tmp/grafana/:/var/lib/grafana/      
     networks:
       - opentelemetry
 
