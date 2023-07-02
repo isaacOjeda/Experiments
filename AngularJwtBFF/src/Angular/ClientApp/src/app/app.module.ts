@@ -9,6 +9,8 @@ import { NavMenuComponent } from './shared/layout/nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { LayoutComponent } from './shared/layout/layout.component';
+import { ProductsComponent } from './products/products.component';
+import { AuthGuard } from './shared/auth.guard';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { LayoutComponent } from './shared/layout/layout.component';
         path: '',
         component: LayoutComponent,
         children: [
-          { path: '', component: HomeComponent }
+          { path: '', component: HomeComponent },
+          { path: 'products', component: ProductsComponent, canActivate: [AuthGuard] }
         ]
       },
       { path: 'login', component: LoginComponent },

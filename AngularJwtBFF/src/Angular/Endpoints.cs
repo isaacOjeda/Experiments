@@ -51,7 +51,7 @@ public static class Endpoints
             return Results.Forbid();
         });
 
-        routes.MapPost("local-logout", async (HttpContext httpContext) =>
+        routes.MapPost("/local-logout", async (HttpContext httpContext) =>
         {
             await httpContext.SignOutAsync();
             return Results.Ok();
