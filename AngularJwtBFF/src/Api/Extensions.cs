@@ -7,9 +7,6 @@ namespace Api;
 
 public static class Extensions
 {
-    public const string SECRET_KEY = "This is my custom Secret key for authnetication";
-    public const string ISSUER = "http://localhost:5000";
-
     public static IServiceCollection AddApiAuthentication(this IServiceCollection services)
     {
         services.AddAuthorization();
@@ -23,8 +20,8 @@ public static class Extensions
                     ValidateAudience = false,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = ISSUER,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SECRET_KEY))
+                    ValidIssuer = Constants.ISSUER,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Constants.SECRET_KEY))
                 };
             });
 

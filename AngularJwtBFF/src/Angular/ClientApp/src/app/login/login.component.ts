@@ -29,14 +29,10 @@ export class LoginComponent implements OnInit {
     this.isBusy = true;
 
     // Post loginModel a /login
-    this.authService.login(this.loginModel.username!, this.loginModel.password!).subscribe(
-      (response: any) => {
-        this.authService.saveUser(response);
-
+    this.authService.login(this.loginModel.username!, this.loginModel.password!)
+      .subscribe(_ => {
         window.location.href = '/home';
-      }
-    ).add(
-      () => this.isBusy = false
-    );
+      })
+      .add(() => this.isBusy = false);
   }
 }

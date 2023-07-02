@@ -18,18 +18,19 @@ public static class Endpoints
             }
             // Genera un JWT dummy
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(Extensions.SECRET_KEY);
+            var key = Encoding.ASCII.GetBytes(Constants.SECRET_KEY);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, request.UserName),
+                    new Claim(ClaimTypes.Email, $"{request.UserName}@localhost"),
                     new Claim(ClaimTypes.Role, "Administrator"),
                     new Claim(ClaimTypes.Role, "OtherRole")
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
-                Issuer = Extensions.ISSUER
+                Issuer = Constants.ISSUER
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);

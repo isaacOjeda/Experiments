@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, catchError, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,17 @@ export class AuthenticationService {
     return this.isAuthenticated() && this.getUser().roles.includes(role);
   }
 
-  login(username: string, password: string) {
-    return this.http.post('local-login', { username, password });
+  login(username: string, password: string): Observable<any> {
+    return this.http.post('login', { username, password })
+      .pipe(
+        catchError(error => {
+          console.error('Error en la solicitud de inicio de sesión:', error);
+          return of(error);
+        }),
+        tap((response: any) => {
+          this.saveUser(response);
+        })
+      );
   }
 
   logout() {
