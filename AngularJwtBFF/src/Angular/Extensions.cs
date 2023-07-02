@@ -35,12 +35,9 @@ public static class Extensions
             {
                 builderContext.AddRequestTransform(transformContext =>
                 {
-                    var accessTokenClaim = transformContext.HttpContext.User.Claims
-                        .FirstOrDefault(q => q.Type == "Access_Token");
-
                     if (transformContext.HttpContext.User.Identity!.IsAuthenticated)
                     {
-                        var claim = transformContext.HttpContext.User.Claims
+                        var accessTokenClaim = transformContext.HttpContext.User.Claims
                             .FirstOrDefault(q => q.Type == "Access_Token");
 
                         if (accessTokenClaim != null)
@@ -50,7 +47,6 @@ public static class Extensions
                             transformContext.ProxyRequest.Headers.Authorization =
                                 new AuthenticationHeaderValue("Bearer", accessToken);
                         }
-
                     }
 
                     return ValueTask.CompletedTask;
