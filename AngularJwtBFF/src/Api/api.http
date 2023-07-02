@@ -1,17 +1,22 @@
 @host = http://localhost:5178
-@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IkFkbWluaXN0cmF0b3IiLCJuYmYiOjE2ODc5OTMyNTAsImV4cCI6MTY4ODU5ODA1MCwiaWF0IjoxNjg3OTkzMjUwLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAifQ.ehLmtHcCz4v62zhe2EUai_q5pT3kzloioUK3l3toZ0Y
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImlzYWFjLm9qZWRhIiwiZW1haWwiOiJpc2FhYy5vamVkYUBsb2NhbGhvc3QiLCJyb2xlIjpbIkFkbWluaXN0cmF0b3IiLCJPdGhlclJvbGUiXSwibmJmIjoxNjg4MzEzNzEwLCJleHAiOjE2ODg5MTg1MTAsImlhdCI6MTY4ODMxMzcxMCwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwIn0.wL7UeHypOI_J5_SQiYxh82Q35qZ5nrOnW9zxS-r0Rf8
 
 ### Token
-POST {{host}}/token
+POST {{host}}/api/token
 Content-Type: application/json
 
+{
+    "userName": "isaac.ojeda",
+    "password": "admin"
+}
+
 ### Token Test
-GET {{host}}/claims
+GET {{host}}/api/claims
 Content-Type: application/json
 Authorization: Bearer {{jwt}}
 
 
 ### Products
-GET {{host}}/products
+GET {{host}}/api/products
 Content-Type: application/json
 Authorization: Bearer {{jwt}}
