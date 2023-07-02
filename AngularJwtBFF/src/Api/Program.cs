@@ -4,7 +4,6 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-
 const string SECRET_KEY = "This is my custom Secret key for authnetication";
 const string ISSUER = "http://localhost:5000";
 
@@ -14,8 +13,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAuthorization();
 
-
-// configura autenticación por Bearer Tokens, valida la expiración y el issuer
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -77,7 +74,6 @@ app.MapGet("/api/claims", (HttpContext http) =>
     return claims;
 }).RequireAuthorization();
 
-
 // GET de productos dummies
 app.MapGet("/api/products", () =>
 {
@@ -93,6 +89,5 @@ app.MapGet("/api/products", () =>
 }).RequireAuthorization();
 
 app.Run();
-
 
 public record LoginRequest(string UserName, string Password);

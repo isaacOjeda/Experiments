@@ -17,10 +17,6 @@ export class AuthenticationService {
     return JSON.parse(localStorage.getItem('user')!);
   }
 
-  removeUser() {
-    localStorage.removeItem('user');
-  }
-
   isAuthenticated() {
     return !!this.getUser();
   }
@@ -31,7 +27,7 @@ export class AuthenticationService {
 
   logout() {
     this.http.post('local-logout', {}).subscribe(result => {
-      this.removeUser();
+      localStorage.removeItem('user');
       window.location.href = '/login';
     });
   }
