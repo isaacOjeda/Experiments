@@ -1,28 +1,34 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../shared/authentication.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
 })
-export class HomeComponent {
-  loginModel: {
-    userName?: string,
-    password?: string
-  } = {};
-  constructor(private httpClient: HttpClient) {
+export class HomeComponent implements OnInit {
+
+  public currentUser: any;
+  public products: any[] = [];
+
+  constructor(
+    private httpClient: HttpClient,
+    private authService: AuthenticationService
+  ) {
 
   }
 
-  login() {
-    this.httpClient.post('/api/login', this.loginModel).subscribe((response) => {
-      console.log(response);
-    });
+  ngOnInit(): void {
+    if (this.authService.isAuthenticated()) {
+      this.getProducts();
+    }
+
+    this.currentUser = this.authService.getUser();
   }
 
   getProducts() {
     this.httpClient.get('/api/products').subscribe((response) => {
-      console.log(response);
+      this.products = response as any[];
     });
   }
 }

@@ -1,10 +1,29 @@
-<h1>Angular BFF</h1>
+<div *ngIf="!currentUser">
+  <h1>Home</h1>
+  <p>You are logged out</p>
+  <p><a [routerLink]="['/login']">Login</a></p>
+</div>
 
-<form (submit)="login()">
-  <input type="text" class="form-control" name="userName" [(ngModel)]="loginModel.userName" />
-  <input type="password" class="form-control" name="password" [(ngModel)]="loginModel.password" />
 
-  <button class="btn btn-primary">Login</button>
-</form>
-<br>
-<button class="btn btn-primary mt-2">Get Products</button>
+<div *ngIf="currentUser">
+  <h1>Home</h1>
+  <p>You are logged in as {{currentUser.name}}</p>
+
+  <h3>Protected Resources</h3>
+  <!-- Tabla con productos -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{product.id}}</td>
+        <td>{{product.name}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

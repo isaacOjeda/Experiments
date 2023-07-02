@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
@@ -69,9 +70,6 @@ app.UseAuthorization();
 
 app.MapReverseProxy();
 
-app.MapFallbackToFile("index.html");
-
-
 app.MapPost("/login", async (
     LoginRequest request,
     HttpContext httpContext,
@@ -79,7 +77,7 @@ app.MapPost("/login", async (
  {
      var client = httpClientFactory.CreateClient();
      var baseAddress = app.Configuration["ApiHost:Url"];
-     var response = await client.PostAsJsonAsync($"{baseAddress}/token", request);
+     var response = await client.PostAsJsonAsync($"{baseAddress}/api/token", request);
 
      if (response.IsSuccessStatusCode)
      {
@@ -95,11 +93,22 @@ app.MapPost("/login", async (
 
          await httpContext.SignInAsync(claimsPrincipal);
 
-         return Results.Ok();
+         // Leer el token y obtener los claims utilizando JWT
+         var handler = new JwtSecurityTokenHandler();
+         var token = handler.ReadJwtToken(loginResponse.Token);
+
+         return Results.Ok(new
+         {
+            token.ValidTo,
+            Name = token.Claims.Where(q => q.Type == "unique_name").FirstOrDefault()?.Value,
+         });
      }
 
      return Results.Forbid();
  });
+
+app.MapFallbackToFile("index.html");
+
 
 app.Run();
 

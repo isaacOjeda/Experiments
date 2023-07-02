@@ -41,8 +41,12 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapPost("/token", () =>
+app.MapPost("/api/token", (LoginRequest request) =>
 {
+    if (request.Password != "admin")
+    {
+        return Results.Unauthorized();
+    }
     // Genera un JWT dummy
     var tokenHandler = new JwtSecurityTokenHandler();
     var key = Encoding.ASCII.GetBytes(SECRET_KEY);
@@ -50,22 +54,24 @@ app.MapPost("/token", () =>
     {
         Subject = new ClaimsIdentity(new Claim[]
         {
-            new Claim(ClaimTypes.Name, "John Doe"),
+            new Claim(ClaimTypes.Name, request.UserName),
             new Claim(ClaimTypes.Role, "Administrator")
         }),
         Expires = DateTime.UtcNow.AddDays(7),
         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
         Issuer = ISSUER
     };
+
     var token = tokenHandler.CreateToken(tokenDescriptor);
-    return new
+
+    return Results.Ok(new
     {
         token = tokenHandler.WriteToken(token)
-    };
+    });
 });
 
 
-app.MapGet("/claims", (HttpContext http) =>
+app.MapGet("/api/claims", (HttpContext http) =>
 {
     var claims = http.User.Claims.Select(c => new { c.Type, c.Value });
     return claims;
@@ -73,7 +79,7 @@ app.MapGet("/claims", (HttpContext http) =>
 
 
 // GET de productos dummies
-app.MapGet("/products", () =>
+app.MapGet("/api/products", () =>
 {
     var products = new[]
     {
@@ -87,3 +93,6 @@ app.MapGet("/products", () =>
 }).RequireAuthorization();
 
 app.Run();
+
+
+public record LoginRequest(string UserName, string Password);
