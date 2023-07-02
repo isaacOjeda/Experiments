@@ -70,7 +70,7 @@ app.UseAuthorization();
 
 app.MapReverseProxy();
 
-app.MapPost("/login", async (
+app.MapPost("/local-login", async (
     LoginRequest request,
     HttpContext httpContext,
     IHttpClientFactory httpClientFactory) =>
@@ -106,6 +106,12 @@ app.MapPost("/login", async (
 
      return Results.Forbid();
  });
+
+app.MapPost("local-logout", async (HttpContext httpContext) =>
+{
+    await httpContext.SignOutAsync();
+    return Results.Ok();
+});
 
 app.MapFallbackToFile("index.html");
 

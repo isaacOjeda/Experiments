@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../shared/authentication.service';
 
@@ -16,7 +15,6 @@ export class LoginComponent implements OnInit {
   } = {};
 
   constructor(
-    private http: HttpClient,
     private authService: AuthenticationService
   ) { }
 
@@ -31,7 +29,7 @@ export class LoginComponent implements OnInit {
     this.isBusy = true;
 
     // Post loginModel a /login
-    this.http.post('/login', this.loginModel).subscribe(
+    this.authService.login(this.loginModel.username!, this.loginModel.password!).subscribe(
       (response: any) => {
         this.authService.saveUser(response);
 

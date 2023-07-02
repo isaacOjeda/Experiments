@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class AuthenticationService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
 
   saveUser(user: any) {
@@ -22,5 +23,16 @@ export class AuthenticationService {
 
   isAuthenticated() {
     return !!this.getUser();
+  }
+
+  login(username: string, password: string) {
+    return this.http.post('local-login', { username, password });
+  }
+
+  logout() {
+    this.http.post('local-logout', {}).subscribe(result => {
+      this.removeUser();
+      window.location.href = '/login';
+    });
   }
 }
