@@ -45,6 +45,7 @@ public static class Endpoints
                 {
                     token.ValidTo,
                     Name = token.Claims.Where(q => q.Type == "unique_name").FirstOrDefault()?.Value,
+                    Roles = token.Claims.Where(q => q.Type == "role").Select(q => q.Value)
                 });
             }
 

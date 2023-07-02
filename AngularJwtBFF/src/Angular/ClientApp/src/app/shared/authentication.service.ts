@@ -21,6 +21,10 @@ export class AuthenticationService {
     return !!this.getUser();
   }
 
+  isInRole(role: string) {
+    return this.isAuthenticated() && this.getUser().roles.includes(role);
+  }
+
   login(username: string, password: string) {
     return this.http.post('local-login', { username, password });
   }
