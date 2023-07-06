@@ -1,0 +1,11 @@
+<div>
+  <button ejs-button type="button" (click)="print()">Print</button>
+  <button ejs-button type="button" (click)="download()">Download</button>
+  <button ejs-button type="button" (click)="saveAsBlobAndUploadToServer()">Upload</button>
+  <button type="button" (click)="openFileFromServer()">Open from Server</button>
+
+  <ejs-documenteditorcontainer #documentEditor (created)="onCreate()" height="1000px" style="display:block"
+    [currentUser]="'Isaac Ojeda'" [serviceUrl]="'api/DocumentEditor/'"> </ejs-documenteditorcontainer>
+
+
+</div>
