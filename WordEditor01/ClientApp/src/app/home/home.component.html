@@ -4,8 +4,10 @@
   <button ejs-button type="button" (click)="saveAsBlobAndUploadToServer()">Upload</button>
   <button type="button" (click)="openFileFromServer()">Open from Server</button>
 
-  <ejs-documenteditorcontainer #documentEditor (created)="onCreate()" height="1000px" style="display:block"
-    [currentUser]="'Isaac Ojeda'" [serviceUrl]="'api/DocumentEditor/'"> </ejs-documenteditorcontainer>
+  <ejs-documenteditorcontainer #documentEditor (created)="onCreate()" (toolbarClick)="onToolbarClick($event)" height="1000px" style="display:block"
+    [enableToolbar]="true" [toolbarItems]="toolBarItems" [currentUser]="'Isaac Ojeda'"
+    [serviceUrl]="'api/DocumentEditor/'">
+  </ejs-documenteditorcontainer>
 
 
 </div>

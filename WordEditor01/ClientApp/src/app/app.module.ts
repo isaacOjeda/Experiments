@@ -9,7 +9,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { BookmarkDialogService, BordersAndShadingDialogService, BulletsAndNumberingDialogService, CellOptionsDialogService, ContextMenuService, DocumentEditorAllModule, DocumentEditorContainerModule, DocumentEditorModule, EditorHistoryService, EditorService, FontDialogService, HyperlinkDialogService, ImageResizerService, ListDialogService, OptionsPaneService, PageSetupDialogService, ParagraphDialogService, PrintService, SearchService, SelectionService, SfdtExportService, StyleDialogService, StylesDialogService, TableDialogService, TableOfContentsDialogService, TableOptionsDialogService, TablePropertiesDialogService, TextExportService, ToolbarService, WordExportService } from '@syncfusion/ej2-angular-documenteditor';
+import { DocumentEditorContainerModule, ToolbarService } from '@syncfusion/ej2-angular-documenteditor';
 import { registerLicense } from '@syncfusion/ej2-base';
 import { LICENSE } from './license';
 
@@ -34,7 +34,7 @@ registerLicense(LICENSE);
       { path: 'fetch-data', component: FetchDataComponent },
     ])
   ],
-  providers: [],
+  providers: [ToolbarService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
