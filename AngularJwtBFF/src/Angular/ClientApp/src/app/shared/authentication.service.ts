@@ -31,7 +31,7 @@ export class AuthenticationService {
       .pipe(
         catchError(error => {
           console.error('Error en la solicitud de inicio de sesión:', error);
-          return of(error);
+          throw error;          
         }),
         tap((response: any) => {
           this.saveUser(response);
