@@ -1,0 +1,16 @@
+@code {
+    [Inject]
+    public LinkGenerator Link { get; set; } = default!;
+    [Parameter]
+    public ContactEditViewModel Contact { get; set; } = new();
+}
+
+<PageTitle>Edit contacts</PageTitle>
+
+<LayoutView Layout=typeof(MainLayout)>
+    <h1 class="mb-8 text-3xl font-bold">
+        <a class="text-blue-500 hover:text-blue-600" href="@Link.GetPathByName("Contacts")">Contacts</a>
+        <span class="text-blue-500 font-medium">/</span>
+        @Contact.Name
+    </h1>
+</LayoutView>
