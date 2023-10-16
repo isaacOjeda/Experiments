@@ -1,5 +1,6 @@
 using BlazorHtmxWeb.Common.Extensions;
 using Microsoft.AspNetCore.Components.Endpoints;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BlazorHtmxWeb.Common.Handlers;
 

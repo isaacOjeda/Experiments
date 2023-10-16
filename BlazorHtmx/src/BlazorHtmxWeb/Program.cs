@@ -3,6 +3,10 @@ using Carter;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAuthentication()
+    .AddCookie();
+builder.Services.AddAuthorization();
+
 builder.Services.AddRazorComponents();
 builder.Services.AddCarter();
 
@@ -11,6 +15,10 @@ builder.Services.AddSingleton<ContactsRepository>();
 var app = builder.Build();
 
 SeedData();
+
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseAntiforgery();
 
 app.MapGet("/", () => Results.Redirect("/contacts"));
 
