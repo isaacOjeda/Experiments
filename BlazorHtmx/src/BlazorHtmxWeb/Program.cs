@@ -3,10 +3,10 @@ using Carter;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddAuthentication()
+builder.Services
+    .AddAuthentication()
     .AddCookie();
 builder.Services.AddAuthorization();
-
 builder.Services.AddRazorComponents();
 builder.Services.AddCarter();
 
@@ -50,5 +50,5 @@ void SeedData()
 
     using var scope = app.Services.CreateScope();
     var repository = scope.ServiceProvider.GetRequiredService<ContactsRepository>();
-    repository.Contacts.AddRange(contacts);    
+    repository.Contacts.AddRange(contacts);
 }
