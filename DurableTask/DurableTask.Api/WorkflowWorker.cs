@@ -1,4 +1,4 @@
-﻿using DurableTask.Api.Workflows;
+﻿using DurableTask.Api.Workflows.CreatePayment;
 using DurableTask.AzureStorage;
 using DurableTask.Core;
 
@@ -18,7 +18,7 @@ public class WorkflowWorker : IHostedService
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         var storageConnectionString = "UseDevelopmentStorage=true";
-        var taskHubName = "TestHub";
+        var taskHubName = "TestHub2";
 
         var azureStorageOrchestrationService = new AzureStorageOrchestrationService(new AzureStorageOrchestrationServiceSettings()
         {
@@ -33,6 +33,7 @@ public class WorkflowWorker : IHostedService
         await _taskHubWorker
             .AddTaskOrchestrations(new ServiceProviderObjectCreator<TaskOrchestration>(typeof(PaymentOrchestrator), _serviceProvider))
             .AddTaskActivities(new ServiceProviderObjectCreator<TaskActivity>(typeof(CreatePaymentActivity), _serviceProvider))
+            .AddTaskActivities(new ServiceProviderObjectCreator<TaskActivity>(typeof(CreateInvoiceActivity), _serviceProvider))
             .StartAsync();
 
         //while (!cancellationToken.IsCancellationRequested)

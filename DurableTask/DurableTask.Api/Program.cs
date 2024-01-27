@@ -1,5 +1,5 @@
 using DurableTask.Api;
-using DurableTask.Api.Workflows;
+using DurableTask.Api.Workflows.CreatePayment;
 using DurableTask.AzureStorage;
 using DurableTask.Core;
 
@@ -14,7 +14,7 @@ builder.Services.AddHostedService<WorkflowWorker>();
 builder.Services.AddScoped(sc =>
 {
     var storageConnectionString = "UseDevelopmentStorage=true";
-    var taskHubName = "TestHub";
+    var taskHubName = "TestHub2";
 
     var azureStorageOrchestrationService = new AzureStorageOrchestrationService(
         new AzureStorageOrchestrationServiceSettings()
@@ -25,8 +25,10 @@ builder.Services.AddScoped(sc =>
 
     return new TaskHubClient(azureStorageOrchestrationService);
 });
+
 builder.Services.AddTransient<PaymentOrchestrator>();
 builder.Services.AddTransient<CreatePaymentActivity>();
+builder.Services.AddTransient<CreateInvoiceActivity>();
 
 var app = builder.Build();
 
@@ -40,9 +42,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 
-app.MapPost("/api/payments", async (string test, TaskHubClient client) =>
+app.MapPost("/api/payments", async (CreatePaymentRequest request, TaskHubClient client) =>
 {
-    var instanceId = await client.CreateOrchestrationInstanceAsync(typeof(PaymentOrchestrator), test);
+    var instanceId = await client.CreateOrchestrationInstanceAsync(typeof(PaymentOrchestrator), request);
 
     return Results.Ok(new
     {
