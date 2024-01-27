@@ -1,34 +1,53 @@
 ﻿using DurableTask.Core;
+using DurableTask.Core.Exceptions;
 
 namespace DurableTask.Api.Workflows.CreatePayment;
 
-public class PaymentOrchestrator : TaskOrchestration<string, CreatePaymentRequest>
+public class PaymentOrchestrator(ILogger<PaymentOrchestrator> logger)
+    : TaskOrchestration<PaymentResponse, CreatePaymentRequest>
 {
-    private readonly ILogger<PaymentOrchestrator> _logger;
-
-    public PaymentOrchestrator(ILogger<PaymentOrchestrator> logger)
+    public override async Task<PaymentResponse> RunTask(OrchestrationContext context, CreatePaymentRequest input)
     {
-        _logger = logger;
+        logger.LogInformation(
+            $"\nIs Replaying = {context.IsReplaying} InstanceId = {context.OrchestrationInstance.InstanceId} Execution ID = {context.OrchestrationInstance.ExecutionId}\n");
+
+        logger.LogInformation("Running Orchestration");
+
+        var paymentResponse = await CreatePayment(context, input);
+        var invoiceResponse = await CreateInvoice(context, input, paymentResponse);
+
+        logger.LogInformation("Orchestration completed");
+
+        return new PaymentResponse(paymentResponse.PaymentId, invoiceResponse.InvoiceId);
     }
 
-    public override async Task<string> RunTask(OrchestrationContext context, CreatePaymentRequest input)
+    private async Task<CreateInvoiceResponse?> CreateInvoice(OrchestrationContext context, CreatePaymentRequest input,
+        CreatePaymentResponse paymentResponse)
     {
-        _logger.LogInformation("Is Replaying =" + context.IsReplaying
-            + " InstanceId =" + context.OrchestrationInstance.InstanceId
-            + " Execution ID =" + context.OrchestrationInstance.ExecutionId);
+        CreateInvoiceResponse? invoiceResponse;
 
-        _logger.LogInformation("Running Orchestration");
+        try
+        {
+            var retryOptions = new RetryOptions(TimeSpan.FromSeconds(10), 5);
 
-        _logger.LogInformation("Calling CreatePayment");
-        var paymentResponse = await context.ScheduleTask<CreatePaymentResponse>(typeof(CreatePaymentActivity), input);
+            invoiceResponse = await context.ScheduleWithRetry<CreateInvoiceResponse>(typeof(CreateInvoiceActivity),
+                retryOptions, new CreateInvoiceRequest(input.OrderId, paymentResponse.PaymentId));
+        }
+        catch (TaskFailedException ex)
+        {
+            logger.LogError(ex, "Failed to create invoice");
 
-        _logger.LogInformation("Calling CreateInvoice");
-        var invoiceResponse = await context.ScheduleTask<CreateInvoiceResponse>(typeof(CreateInvoiceActivity),
-            new CreateInvoiceRequest(input.OrderId, paymentResponse.PaymentId));
+            return null;
+        }
 
+        return invoiceResponse;
+    }
 
-        _logger.LogInformation("Orchestration completed");
-
-        return "success";
+    private async Task<CreatePaymentResponse> CreatePayment(OrchestrationContext context, CreatePaymentRequest input)
+    {
+        return await context.ScheduleTask<CreatePaymentResponse>(typeof(CreatePaymentActivity), input);
     }
 }
+
+
+public record PaymentResponse(string PaymentId, string InvoiceId);

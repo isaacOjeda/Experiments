@@ -7,6 +7,16 @@ public class CreateInvoiceActivity(ILogger<CreateInvoiceActivity> logger)
 {
     protected override Task<CreateInvoiceResponse> ExecuteAsync(TaskContext context, CreateInvoiceRequest input)
     {
+
+        // Simular una falla aleatoria
+        if (new Random().Next(0, 10) > 5)
+        {
+            logger.LogError("Failed to create invoice");
+
+            throw new Exception("Failed to create invoice");
+        }
+
+
         logger.LogInformation("\nCreating invoice for order {OrderId} with payment {PaymentId}\n",
                        input.OrderId, input.PaymentId);
 

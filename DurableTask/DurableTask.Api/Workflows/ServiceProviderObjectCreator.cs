@@ -1,25 +1,26 @@
 ﻿using DurableTask.Core;
 
-namespace DurableTask.Api;
+namespace DurableTask.Api.Workflows;
 
 public class ServiceProviderObjectCreator<T> : ObjectCreator<T>
 {
-    readonly Type prototype;
-    readonly IServiceProvider serviceProvider;
+    private readonly Type _prototype;
+    private readonly IServiceProvider _serviceProvider;
 
     public ServiceProviderObjectCreator(Type type, IServiceProvider serviceProvider)
     {
-        this.prototype = type;
-        this.serviceProvider = serviceProvider;
+        _prototype = type;
+        _serviceProvider = serviceProvider;
+
         Initialize(type);
     }
 
     public override T Create()
     {
-        return (T)serviceProvider.GetService(this.prototype);
+        return (T)_serviceProvider.GetService(_prototype)!;
     }
 
-    void Initialize(object obj)
+    private void Initialize(object obj)
     {
         Name = NameVersionHelper.GetDefaultName(obj);
         Version = NameVersionHelper.GetDefaultVersion(obj);
