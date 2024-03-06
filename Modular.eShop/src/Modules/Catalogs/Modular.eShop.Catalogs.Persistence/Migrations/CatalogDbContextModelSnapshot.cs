@@ -83,7 +83,7 @@ namespace Modular.eShop.Catalogs.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductBrand", "Catalog");
+                    b.ToTable("ProductBrands", "Catalog");
                 });
 
             modelBuilder.Entity("Modular.eShop.Catalogs.Domain.Entities.ProductType", b =>
@@ -104,7 +104,7 @@ namespace Modular.eShop.Catalogs.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductType", "Catalog");
+                    b.ToTable("ProductTypes", "Catalog");
                 });
 
             modelBuilder.Entity("Modular.eShop.Catalogs.Domain.Entities.Product", b =>

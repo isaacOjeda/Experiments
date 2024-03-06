@@ -12,8 +12,8 @@ using Modular.eShop.Catalogs.Persistence;
 namespace Modular.eShop.Catalogs.Persistence.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20240306194012_init")]
-    partial class init
+    [Migration("20240306225629_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,10 +34,16 @@ namespace Modular.eShop.Catalogs.Persistence.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -80,7 +86,7 @@ namespace Modular.eShop.Catalogs.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductBrand", "Catalog");
+                    b.ToTable("ProductBrands", "Catalog");
                 });
 
             modelBuilder.Entity("Modular.eShop.Catalogs.Domain.Entities.ProductType", b =>
@@ -101,7 +107,7 @@ namespace Modular.eShop.Catalogs.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductType", "Catalog");
+                    b.ToTable("ProductTypes", "Catalog");
                 });
 
             modelBuilder.Entity("Modular.eShop.Catalogs.Domain.Entities.Product", b =>

@@ -1,7 +1,7 @@
 ﻿using FluentResults;
 using FluentValidation;
 using MediatR;
-using Modular.eShop.Application.Errors;
+using Modular.eShop.Shared.Errors;
 
 namespace Modular.eShop.Application.Behaviors;
 

@@ -36,6 +36,7 @@ public class Product : Entity<ProductId>, IAuditable
     {
         var product = new Product(id)
         {
+            Active = true,
             Name = name,
             Description = description,
             Price = price,

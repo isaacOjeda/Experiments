@@ -40,6 +40,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modular.eShop.Persistence",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modular.eShop.Endpoints", "src\Common\Modular.eShop.Endpoints\Modular.eShop.Endpoints.csproj", "{4F004D6A-4432-44A6-B8FB-75DA9469C674}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modular.eShop.Shared", "Modular.eShop.Shared\Modular.eShop.Shared.csproj", "{935433A8-3D1E-4F96-803B-22F9CA968DF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,6 +92,10 @@ Global
 		{4F004D6A-4432-44A6-B8FB-75DA9469C674}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F004D6A-4432-44A6-B8FB-75DA9469C674}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F004D6A-4432-44A6-B8FB-75DA9469C674}.Release|Any CPU.Build.0 = Release|Any CPU
+		{935433A8-3D1E-4F96-803B-22F9CA968DF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{935433A8-3D1E-4F96-803B-22F9CA968DF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{935433A8-3D1E-4F96-803B-22F9CA968DF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{935433A8-3D1E-4F96-803B-22F9CA968DF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +115,7 @@ Global
 		{4FF2EE6A-2594-4D0B-9796-CD15DCDB3886} = {4EC2BAAC-40F7-407E-86C3-82936316D264}
 		{372EA3CB-2022-4BE9-845A-E865B763BD47} = {4EC2BAAC-40F7-407E-86C3-82936316D264}
 		{4F004D6A-4432-44A6-B8FB-75DA9469C674} = {4EC2BAAC-40F7-407E-86C3-82936316D264}
+		{935433A8-3D1E-4F96-803B-22F9CA968DF3} = {4EC2BAAC-40F7-407E-86C3-82936316D264}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B26F0EED-A9D9-4CE3-9972-C3B59AB12222}

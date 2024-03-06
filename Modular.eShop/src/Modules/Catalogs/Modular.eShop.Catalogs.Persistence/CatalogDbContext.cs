@@ -13,6 +13,10 @@ public class CatalogDbContext : DbContext, ICatalogDbContext
 
     public DbSet<Product> Products => Set<Product>();
 
+    public DbSet<ProductType> ProductTypes => Set<ProductType>();
+
+    public DbSet<ProductBrand> ProductBrands => Set<ProductBrand>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         if (modelBuilder is null)

@@ -4,8 +4,4 @@
 		<ProjectReference Include="..\..\..\Common\Modular.eShop.Application\Modular.eShop.Application.csproj" />
 		<ProjectReference Include="..\Modular.eShop.Catalogs.Domain\Modular.eShop.Catalogs.Domain.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-
-	</ItemGroup>
 </Project>
