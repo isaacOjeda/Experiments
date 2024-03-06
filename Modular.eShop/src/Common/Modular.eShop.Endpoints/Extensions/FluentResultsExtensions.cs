@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Modular.eShop.Shared.Errors;
 
 namespace Modular.eShop.Endpoints.Extensions;
-public static class FastEndpointExtensiosn
+public static class FluentResultsExtensions
 {
     public static IResult HandleFailure(this Result result)
     {

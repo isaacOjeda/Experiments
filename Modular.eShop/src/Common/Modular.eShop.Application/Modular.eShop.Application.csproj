@@ -5,7 +5,6 @@
 		<PackageReference Include="MediatR" />
 		<PackageReference Include="FluentResults" />
 		<PackageReference Include="FluentValidation" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" />
 	</ItemGroup>
 
 	<ItemGroup>
