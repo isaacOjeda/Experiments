@@ -4,4 +4,8 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
 		<PackageReference Include="Scrutor" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Modular.eShop.Application\Modular.eShop.Application.csproj" />
+	</ItemGroup>
 </Project>

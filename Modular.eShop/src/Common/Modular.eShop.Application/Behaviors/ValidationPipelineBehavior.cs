@@ -25,7 +25,10 @@ public class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior
     /// <inheritdoc />
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        if (!_validators.Any()) return await next();
+        if (!_validators.Any())
+        {
+            return await next();
+        }
 
         var context = new ValidationContext<TRequest>(request);
 
@@ -34,11 +37,11 @@ public class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior
                 v.ValidateAsync(context, cancellationToken)));
 
         var failures = validationResults
-            .Where(r => r.Errors.Any())
+            .Where(r => r.Errors.Count != 0)
             .SelectMany(r => r.Errors)
             .ToList();
 
-        if (failures.Any())
+        if (failures.Count != 0)
         {
 
             var response = Activator.CreateInstance<TResponse>();

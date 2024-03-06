@@ -9,8 +9,6 @@ public sealed class CatalogsModuleInstaller : IModuleInstaller
 {
     public void Install(IServiceCollection services, IConfiguration configuration)
     {
-        services.InstallServicesFromAssemblies(
-            configuration,
-            AssemblyReference.Assembly);
+        services.InstallServicesFromAssemblies(configuration, AssemblyReference.Assembly);
     }
 }

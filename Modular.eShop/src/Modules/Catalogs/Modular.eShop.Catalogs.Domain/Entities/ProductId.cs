@@ -1,3 +1,5 @@
-﻿namespace Modular.eShop.Catalogs.Domain.Entities;
+﻿using Modular.eShop.Domain.Primitives;
 
-public readonly record struct ProductId(Guid Value);
+namespace Modular.eShop.Catalogs.Domain.Entities;
+
+public sealed record ProductId(Guid Value) : IEntityId;

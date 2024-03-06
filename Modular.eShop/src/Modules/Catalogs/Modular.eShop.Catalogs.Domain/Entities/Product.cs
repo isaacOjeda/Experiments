@@ -1,15 +1,16 @@
-﻿namespace Modular.eShop.Catalogs.Domain.Entities;
+﻿using Modular.eShop.Domain.Primitives;
+
+namespace Modular.eShop.Catalogs.Domain.Entities;
 
 /// <summary>
 /// Product entity.
 /// </summary>
-public class Product
+public class Product : Entity<ProductId>, IAuditable
 {
-    private Product()
+    private Product(ProductId id)
+        : base(id)
     {
     }
-
-    public ProductId Id { get; private set; }
 
     public string Name { get; private set; } = default!;
 
@@ -27,11 +28,14 @@ public class Product
 
     public ProductType? ProductType { get; private set; }
 
+    public DateTime CreatedOnUtc { get; private set; }
+
+    public DateTime? ModifiedOnUtc { get; private set; }
+
     public static Product Create(ProductId id, string name, string description, decimal price, int productTypeId, int productBrandId)
     {
-        var product = new Product
+        var product = new Product(id)
         {
-            Id = id,
             Name = name,
             Description = description,
             Price = price,
